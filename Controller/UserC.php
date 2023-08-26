@@ -62,7 +62,7 @@ class UserC
                 ');
                 
                $rs=$querry->execute([
-                'nom'  = >$User->getNom(),
+                'nom'  =>$User->getNom(),
                 'prenom'=>$User->getPrenom(),
                 'login' => $User->getLogin(),
                 'email' => $User->getEmail(),
@@ -102,28 +102,18 @@ class UserC
         }
     }
 
-    function updateUser($user)
+    function updateUser($User)
     {
-        try {
-            $db = config::getConnexion();
-            $query = $db->prepare(
-                'UPDATE user SET 
-                    login = :login,
-                    nom=:nom,
-                    prenom=:prenom,
-                    email = :email, 
-                    email = :email, 
-                    date_n = :date_n,
-                    img = :img,
-                    mdp = :mdp,
-                    date_c=:date_c,
-                    genre=:genre,
-                    role =: role
-                WHERE id = :id '
-            );
-            $query->execute([
-                'id' => $user->getId(),
-                'nom'  = >$User->getNom(),
+        $config = config::getConnexion();
+            try {
+                $querry = $config->prepare('
+                UPDATE user SET
+                nom=:nom,prenom=:prenom,email=:email,img=:img,login=:login,date_n=:date_n,mdp=:mdp,genre=:genre,date_c=:date_c,role=:role
+                where id=:id');
+                
+                $querry->execute([
+                    'id'=>$User->getId(),
+                    'nom'  =>$User->getNom(),
                 'prenom'=>$User->getPrenom(),
                 'login' => $User->getLogin(),
                 'email' => $User->getEmail(),
@@ -133,11 +123,15 @@ class UserC
                 'date_c'=>$User->getDate_creation()->format('Y-m-d H:i:s'),
                 'genre'=>$User->getGenre(),
                 'role'=>$User->getRole()
-            ]);
-            echo $query->rowCount() . " records UPDATED successfully <br>";
-        } catch (PDOException $e) {
-            $e->getMessage();
-        }
+                   
+                    
+
+                  
+                ]);
+            } catch (PDOException $th) {
+                 $th->getMessage();
+            }
+            
     }
     function getUserByEmail($email)
     {
