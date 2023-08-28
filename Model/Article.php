@@ -8,8 +8,9 @@ class Article
     public $date_p;
     public $img;
     public $id_user;
+    public $is_accepted;
 
-    public function __construct(int $id,string $categorie,string $titre, string $description,DateTime $date_p,string $img,int $id_user )
+    public function __construct(int $id,string $categorie,string $titre, string $description,DateTime $date_p,string $img,int $id_user,int $is_accepted )
     {
         $this->id = $id;
         $this->categorie = $categorie;
@@ -18,6 +19,7 @@ class Article
         $this->date_p=$date_p;
         $this->img=$img;
         $this->id_user=$id_user;
+        $this->is_accpeted=$is_accepted;
       
     }
 
@@ -28,6 +30,14 @@ class Article
     public function setId(int $id)
     {
         $this->id=$id;
+    }
+    public function getIs_accpeted() : int
+    {
+        return $this->is_accpeted;
+    }
+    public function setIs_accepted(int $x)
+    {
+        $this->is_accpeted=$x;
     }
     public function getCategorie() : string
     {

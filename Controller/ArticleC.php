@@ -83,9 +83,9 @@ class ArticleC
             try {
                 $querry = $config->prepare('
                 INSERT INTO article
-                (categorie, titre,description, date_p, img,id_user)
+                (categorie, titre,description, date_p, img,id_user,is_accepted)
                 VALUES
-                (:categorie ,:titre ,:description ,:date_p ,:img ,:id_user)
+                (:categorie ,:titre ,:description ,:date_p ,:img ,:id_user,:is_accepted)
                 ');
                 $querry->execute([
                     'categorie'=>$article->getCategorie(),
@@ -93,7 +93,8 @@ class ArticleC
                     'description'=>$article->getDescription(),
                     'date_p'=>$article->getDate_p()->format('Y-m-d H:i:s'),
                     'img'=>$article->getImg(),
-                    'id_user'=>$article->getId_user()
+                    'id_user'=>$article->getId_user(),
+                    'is_accepted'=>$article->getIs_accepted()
                   
                 ]);
             } catch (PDOException $th) {
@@ -106,7 +107,7 @@ class ArticleC
             try {
                 $querry = $config->prepare('
                 UPDATE article SET
-                categorie=:categorie,titre=:titre,description=:description,date_p=:date_p,img=:img,id_user=:id_user
+                categorie=:categorie,titre=:titre,description=:description,date_p=:date_p,img=:img,id_user=:id_user,is_accepted=:is_accepted
                 where id=:id');
                 
                 $querry->execute([
@@ -116,7 +117,27 @@ class ArticleC
                     'description'=>$article->getDescription(),
                     'date_p'=>$article->getDate_p()->format('Y-m-d H:i:s'),
                     'img'=>$article->getImg(),
-                    'id_user'=>$article->getId_user()
+                    'id_user'=>$article->getId_user(),
+                    'is_accepted'=>$article->getIs_accepted()
+
+                  
+                ]);
+            } catch (PDOException $th) {
+                 $th->getMessage();
+            }
+        }
+        function Approuver($id)
+        {
+            $config = config::getConnexion();
+            try {
+                $querry = $config->prepare('
+                UPDATE article SET
+                is_accepted=1
+                where id=:id');
+                
+                $querry->execute([
+                    'id'=>$id
+                   
 
                   
                 ]);

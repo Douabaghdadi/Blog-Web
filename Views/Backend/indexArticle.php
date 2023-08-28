@@ -1,14 +1,16 @@
 <?php
 session_start();
+include "../../Controller/ArticleC.php";
+include_once '../../Model/Article.php';
 include "../../Controller/UserC.php";
 include_once '../../Model/User.php';
-$userC = new UserC();
-$listuser = $userC->listUser();
+$artC = new ArticleC();
+$listarticles = $artC->AfficherArticle();
 if(isset($_REQUEST['submit-search']))
       {
-       $listuser = $userC->Recherche($_POST['search']);
+       $listarticles = $artC->Recherche($_POST['search']);
       }else {
-        $listuser = $userC->listUser();
+        $listarticles = $artC->AfficherArticle();
       }
 
 ?>
@@ -281,7 +283,7 @@ if(isset($_REQUEST['submit-search']))
       <li class="nav-heading">Pages</li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed active" href="indexuser.php">
+        <a class="nav-link collapsed active" href="indexAdmin.php">
           <i class="bi bi-person"></i>
           <span>Gestion User</span>
         </a>
@@ -400,41 +402,45 @@ if(isset($_REQUEST['submit-search']))
 <table class="table">
   <thead>
     <tr>
-      <th>Nom</th>
-      <th>Prenom</th>
-      <th>Login</th>
-      <th>Email</th>
-      <th>Date de naissance</th>
+      <th>Categorie</th>
+      <th>Titre</th>
+      <th>description</th>
+      <th>date_ajout</th>
       <th>Image</th>
-      <th>Mot de passe</th>
-      <th>Date de création</th>
-      <th>Genre</th>
-      <th>Role</th>
+      <th>User</th>
+      <th>Etat</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody>
-    <?php foreach($listuser as $user) { ?>
+    <?php foreach($listarticles as $key) { ?>
     <tr>
-      <td><?php echo $user['nom'];?></td>
-      <td><?php echo $user['prenom']; ?></td>
-      <td><?php echo $user['login']; ?></td>
-      <td><?php echo $user['email']; ?></td>
-      <td><?php echo $user['date_n']; ?></td>
-      <td><img src="<?php echo $user['img'];?>"></td>
-      <td><?php echo $user['mdp']; ?></td>
-      <td><?php echo $user['date_c']; ?></td>
-      <td><?php echo $user['genre']; ?></td>
-      <td><?php echo $user['role']; ?></td>
+      <td><?php echo $key['categorie'];?></td>
+      <td><?php echo $key['titre']; ?></td>
+      <td><?php echo $key['description']; ?></td>
+      <td><?php echo $key['date_p']; ?></td>
+    
+      <td><img src="<?php echo $key['img'];?>"></td>
+      <td><?php $userC=new UserC();
+      $user=$userC->getuserbyID($key['id_user']);echo $user['login']; ?></td>
       <td>
-        <a href="deleteuser.php?id=<?php echo $user['id'] ?>" >Supprimer</a>
-        <a href="edituser.php?id=<?php echo $user['id'] ?>" >Modifier</a>
+      <?php if($key['is_accepted']==0){ ?>Non Approuvé <?php } ?>
+      <?php if($key['is_accepted']==1){ ?> Approuvé <?php } ?>
+      </td>
+      <td>
+        <?php if($key['is_accepted']==0){ ?>
+        <a href="deletearticle.php?id=<?php echo $key['id'] ?>" >Refuser</a>
+        <a href="accept.php?id=<?php echo $key['id'] ?>" >Approuver</a>
+        <?php } ?>
+        <?php if($key['is_accepted']==1) { ?>
+            <a href="deletearticle.php?id=<?php echo $key['id'] ?>" >Supprimer</a>
+            <?php } ?>
       </td>
     </tr>
     <?php } ?>
   </tbody>
 </table>
-    <a href="Adduser.php" ><button>Ajouter user</button></a>
+    
 
 
             </div>

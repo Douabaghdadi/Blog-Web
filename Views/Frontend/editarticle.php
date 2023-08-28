@@ -55,7 +55,7 @@ if (isset($_REQUEST['edit'])) {
           $date = new DateTime($articletoedit['date_p']);
          
           
-            $article = new Article($_GET['id'],$_POST['categorie'],$_POST['titre'], $_POST['description'],$date,$target_file,$_SESSION['id']);
+            $article = new Article($_GET['id'],$_POST['categorie'],$_POST['titre'], $_POST['description'],$date,$target_file,$_SESSION['id'],$articletoedit['is_accepted']);
             $ArticleC->ModifierArticle($article);
             
            

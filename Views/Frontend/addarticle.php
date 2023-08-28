@@ -54,7 +54,7 @@ if (isset($_REQUEST['add'])) {
           $Now = new DateTime('now', new DateTimeZone('Europe/Paris'));
          
           
-            $article = new Article(1,$_POST['categorie'],$_POST['titre'], $_POST['description'],$Now,$target_file,$_SESSION['id']);
+            $article = new Article(1,$_POST['categorie'],$_POST['titre'], $_POST['description'],$Now,$target_file,$_SESSION['id'],0);
             $ArticleC->AjouterArticle($article);
             
            

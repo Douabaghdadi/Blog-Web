@@ -282,7 +282,7 @@ if (isset($_REQUEST['edit']))
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
-
+     
       
 
       
@@ -290,9 +290,15 @@ if (isset($_REQUEST['edit']))
       <li class="nav-heading">Pages</li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed active" href="indexuser.php">
+        <a class="nav-link collapsed active" href="indexadmin.php">
           <i class="bi bi-person"></i>
           <span>Gestion User</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed active" href="indexArticle.php">
+          <i class="bi bi-person"></i>
+          <span>Gestion Articles</span>
         </a>
       </li><!-- End Profile Page Nav -->
 

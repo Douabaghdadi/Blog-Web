@@ -339,12 +339,18 @@ if (isset($_REQUEST['add'])) {
       <li class="nav-heading">Pages</li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed active" href="indexuser.php">
+        <a class="nav-link collapsed active" href="indexAdmin.php">
           <i class="bi bi-person"></i>
           <span>Gestion User</span>
         </a>
-      </li><!-- End Profile Page Nav -->
-
+      </li>
+      <!-- End Profile Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed active" href="indexArticle.php">
+          <i class="bi bi-person"></i>
+          <span>Gestion Articles</span>
+        </a>
+      </li>
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-faq.html">
           <i class="bi bi-question-circle"></i>
