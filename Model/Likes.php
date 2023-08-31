@@ -2,16 +2,16 @@
 class Likes
 {
 private $id;
-private $idposte;
+private $id_article;
 private $iduser;
 
 
-function __construct(int $id,int $idposte,int $iduser){
+function __construct(int $id,int $id_article,int $iduser){
 
     $this->id=$id;
    
     $this->iduser=$iduser;
-    $this->idposte=$id_article;
+    $this->id_article=$id_article;
  
 
 } 
