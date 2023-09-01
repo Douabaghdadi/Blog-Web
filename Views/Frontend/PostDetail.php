@@ -5,21 +5,20 @@
 include '../../Controller/ArticleC.php';
 include '../../Controller/LikesC.php';
 include '../../Controller/CommentaireC.php';
+include '../../Controller/UserC.php';
 
+require_once '../../model/User.php';
 require_once '../../model/Commentaire.php';
 require_once '../../model/Likes.php';
 require_once '../../model/Article.php';
 session_start();
 $ArticleC = new ArticleC();
-$listarticles=$ArticleC->AfficherArticle();
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addcomm'])) {
-  $CommentC = new CommentaireC();
-  $Now = new DateTime('now', new DateTimeZone('Europe/Paris'));
-  
-  $comment = new Commentaire(1, $_POST['contenu'], $_SESSION['id'], $_POST['postid'], $Now);
-  $CommentC->AjouterComment($comment);
-  header("Location: postDetail.php?id={$_POST['postid']}");
-exit();
+$comC = new CommentaireC();
+if(isset($_GET['id']))
+{
+    $article = $ArticleC->getArticleById($_GET['id']);
+    $listcoms=$comC->AfficherCommentByArticle($_GET['id']);
+
 }
 ?>
 
@@ -132,197 +131,64 @@ https://templatemo.com/tm-587-tiya-golf-club
                 <svg viewBox="0 0 1962 178" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path fill="#ffffff" d="M 0 114 C 118.5 114 118.5 167 237 167 L 237 167 L 237 0 L 0 0 Z" stroke-width="0"></path> <path fill="#ffffff" d="M 236 167 C 373 167 373 128 510 128 L 510 128 L 510 0 L 236 0 Z" stroke-width="0"></path> <path fill="#ffffff" d="M 509 128 C 607 128 607 153 705 153 L 705 153 L 705 0 L 509 0 Z" stroke-width="0"></path><path fill="#ffffff" d="M 704 153 C 812 153 812 113 920 113 L 920 113 L 920 0 L 704 0 Z" stroke-width="0"></path><path fill="#ffffff" d="M 919 113 C 1048.5 113 1048.5 148 1178 148 L 1178 148 L 1178 0 L 919 0 Z" stroke-width="0"></path><path fill="#ffffff" d="M 1177 148 C 1359.5 148 1359.5 129 1542 129 L 1542 129 L 1542 0 L 1177 0 Z" stroke-width="0"></path><path fill="#ffffff" d="M 1541 129 C 1751.5 129 1751.5 138 1962 138 L 1962 138 L 1962 0 L 1541 0 Z" stroke-width="0"></path></svg>
             </section>
 
-
-           
-
-
-            <section class="events-section events-listing-section section-bg section-padding" id="section_3">
+            <section class="events-section events-detail-section section-padding" id="section_2">
                 <div class="container">
                     <div class="row">
 
-                        <div class="col-lg-12 col-12">
-                            <h2 class="mb-3">Liste des Articles</h2>
-                        </div>
+                        <div class="col-lg-6 col-md-8 col-12 mx-auto">
+                            <h2 class="mb-lg-5 mb-4"><?php echo $article['titre'] ?></h2>
 
-                        
-                        <?php foreach($listarticles as $key) { ?>
-                        <div class="row custom-block custom-block-bg">
-                            <div class="col-lg-2 col-md-4 col-12 order-2 order-md-0 order-lg-0">
-                                <div class="custom-block-date-wrap d-flex d-lg-block d-md-block align-items-center mt-3 mt-lg-0 mt-md-0">
-                                    <h6 class="custom-block-date mb-lg-1 mb-0 me-3 me-lg-0 me-md-0"></h6>
-                                    
-                                    <strong class="text-white">2023</strong>
-                                </div>
+                            <div class="custom-block-image-wrap">
+                                <img src="<?php echo $article['img'] ?>" class="custom-block-image img-fluid" alt="">
                             </div>
 
-                            <div class="col-lg-4 col-md-8 col-12 order-1 order-lg-0">
-                                <div class="custom-block-image-wrap">
-                                    <a href="event-detail.html">
-                                        <img src="<?php echo $key['img'] ?>" class="custom-block-image img-fluid" alt="">
+                            <div class="custom-block-info">
+                                <h3 class="mb-3"><?php echo $article['categorie'] ?></h3>
 
-                                        <i class="custom-block-icon bi-link"></i>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6 col-12 order-3 order-lg-0">
-                                <div class="custom-block-info mt-2 mt-lg-0">
-                                    <a href="event-detail.html" class="events-title mb-3"><?php echo $key['titre'] ?></a>
-
-                                    <p class="mb-0"><?php echo $key['description'] ?></p>
-
-                                    <div class="d-flex flex-wrap border-top mt-4 pt-3">
-
-                                        <div class="mb-4 mb-lg-0">
-                                            <div class="d-flex flex-wrap align-items-center mb-1">
-                                                <span class="custom-block-span">Catgeorie:</span>
-
-                                                <p class="mb-0"><?php echo $key['categorie'] ?></p>
-                                            </div>
-
-                                              
-      <div class="post-actions">
-      <?php
-      $LikesC = new LikesC();
-      $totallikes = $LikesC->GetLikesByArticle($key['id']);
-      $already_liked = $LikesC->CheckLike(1,$key['id']);
-      if ($already_liked==0) {
-        
-      ?>
-      <a href="Like.php?id=<?php echo $key['id']; ?>">
-        <button class="like-button"><i class="fa fa-thumbs-up"></i> Like</button></a>
-        <?php
-}?>
-<?php
-      $LikesC = new LikesC();
-      $totallikes = $LikesC->GetLikesByArticle($key['id']);
-      $already_liked = $LikesC->CheckLike(1,$key['id']);
-      if ($already_liked==1) {
-        
-      ?>
-      <a href="Dislike.php?id=<?php echo $key['id']; ?>">
-        <button class="like-button"><i class="fa fa-thumbs-up"></i> DisLike</button></a>
-        <?php
-}?>
+                                <p>T<?php echo $article['description'] ?></p>
 
 
-        
-        <span class="like-count">
-          <i class="fa fa-heart"></i>
-          <?php echo $totallikes;?>
-        </span>
-        
-        <button id="comment-button-<?php echo $key['id']; ?>" class="comment-button"><i class="fa fa-comment"></i> Comment</button>
-                                        </div>
-                                        <div id="comment-form-container-<?php echo $key['id']; ?>" class="comment-form-container" style="display:none;">
-        <form method="POST" class="comment-form">
-        <input  style="display:none;" value=<?php echo $key['id'];?> name="postid"></input>
-          <textarea  style=" height: 150px;
-  margin-bottom: 10px;
-  padding: 10px;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  font-size: 16px;
-  width: 600px;"placeholder="Write your comment here" name="contenu"></textarea>
-          <button type="submit" name="addcomm" class="submit-comment-button">Submit</button>
-        </form>
-      </div>
-      <style>
-        .comment-form-container {
-  display: none;
-  margin-top: 20px;
-}
+                                <div class="events-detail-info row my-5">
+                                    <div class="col-lg-12 col-12">
+                                        <h4 class="mb-3"> Detail</h4>
+                                    </div>
 
-.comment-form {
-  display: flex;
-  flex-direction: column;
-}
+                                    <div class="col-lg-4 col-12">
+                                        <span class="custom-block-span">Date:</span>
 
-.comment-form textarea {
- 
-}
+                                        <p class="mb-0"><?php echo $article['date_p'] ?></p>
+                                    </div>
 
-.submit-comment-button {
-  align-self: flex-end;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 50px;
-  background-color: #00008B;
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+                                    <div class="col-lg-4 col-12 my-3 my-lg-0">
+                                        <span class="custom-block-span">Categorie:</span>
 
-.submit-comment-button:hover {
-  background-color: #ADD8E6;
-}
-        </style>
-      <script>
-  // Get all the comment buttons
-  var commentButtons = document.querySelectorAll('.comment-button');
+                                        <p class="mb-0"><?php echo $article['categorie'] ?></p>
+                                    </div>
 
-  // Loop through the comment buttons
-  commentButtons.forEach(function(button) {
-    // Get the ID of the post
-    var postId = button.getAttribute('id').split('-')[2];
-
-    // Add a click event listener to the comment button
-    button.addEventListener('click', function() {
-      // Get the comment form container for this post
-      var commentFormContainer = document.querySelector('#comment-form-container-' + postId);
-
-      // Show the comment form container
-      commentFormContainer.style.display = 'block';
-    });
-  });
-</script>                           
+                                    <div class="col-lg-4 col-12">
+                                        <span class="custom-block-span">Auteur:</span>
+                                        <?php $userC= new UserC();
+                                        $user= $userC->showUser($article['id_user']);
+                                        ?>
+                                           <p><?php echo $user['login']  ?> </p>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-<?php } ?>
-                    </div>
-                </div>
-            </section>
-        </main>
-        <style>
-		
-        .forum-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 40px;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-}
 
-.post-container {
-  background-color: #fff;
-  padding: 20px;
-  margin-bottom: 40px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.post-title {
-  font-size: 28px;
-  font-weight: bold;
-  margin-top: 0;
-  margin-bottom: 10px;
-}
-
-.post-description {
-  font-size: 18px;
-  margin-bottom: 20px;
-}
-
-.post-date {
+                             <style>
+                                .delete-comment-button {
+  background-color: #e7f2ff;
+  color: #3273dc;
+  border: none;
+  padding: 3px 6px;
+  border-radius: 3px;
   font-size: 14px;
-  color: #888;
-  margin-top: 0;
-  margin-bottom: 20px;
+  cursor: pointer;
 }
 
+.delete-comment-button:hover {
+  background-color: #3273dc;
+  color: #fff;
+}
 .comments-container {
   background-color: #fff;
   padding: 20px;
@@ -371,116 +237,50 @@ https://templatemo.com/tm-587-tiya-golf-club
   color: #888;
   margin-top: 0;
 }
+                                </style>
 
-.post-actions {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+<div class="comments-container">
+      <h3 class="comments-title">Commentaires</h3>
+      <?php
+     
+      foreach ($listcoms as $com) {
+        ?>
+        <div class="comment">
+        <?php $userC= new UserC();
+                                        $user= $userC->showUser($com['id_user']);
+                                        ?>
+      <img class="comment-avatar" src="<?php echo $user['img'] ?>" alt="Avatar">
+     
+                                           <p>Publié par :<?php echo $user['login']  ?> </p>
+      
+      <div class="comment-body">
+        Contenu : <p class="comment-text"><?php echo $com['contenu']; ?></p>
+        <p class="comment-date"><?php echo $com['date']; ?></p>
+        <?php if($com['id_user']==$_SESSION['id']) { ?>
+        
+        <a href="deletecomment.php?id=<?php echo $com['id']; ?>" class="delete-comment-button">
+        Supprimer
+      </a>
+      <?php } ?>
+      </div>
+      
+      <?php } ?>
+    </div>
+      </div>
+      
+    </div>
+  </center>
 
-.like-button, .comment-button {
-  display: inline-flex;
-  align-items: center;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 50px;
-  background-color: #f5f5f5;
-  color: #444;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-}
 
-.like-button:hover, .comment-button:hover {
-  background-color: #ddd;
-  color: #222;
-}
 
-.like-button i, .comment-button i {
-  margin-right: 5px;
-  font-size: 20px;
-}
-.comment-form-container {
-  display: none;
-  margin-top: 20px;
-}
+                            </div>
+                        </div>
 
-.comment-form {
-  display: flex;
-  flex-direction: column;
-}
-
-.comment-form textarea {
-  height: 80px;
-  margin-bottom: 10px;
-  padding: 10px;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  font-size: 16px;
-  resize: none;
-}
-
-.submit-comment-button {
-  align-self: flex-end;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 50px;
-  background-color: #00008B;
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.submit-comment-button:hover {
-  background-color: #ADD8E6;
-}
-
-.like-count {
-    display: inline-block;
-    margin-left: 5px;
-    font-size: 14px;
-    color: #555;
-  }
-  .delete-button {
-  background-color: transparent;
-  border: none;
-  color: #ff0000; /* red color for emphasis */
-  cursor: pointer;
-  font-size: 14px;
-  text-decoration: underline;
-  margin-left: 10px;
-}
-.edit-button {
-  background-color: transparent;
-  border: none;
-  color: #555; /* red color for emphasis */
-  cursor: pointer;
-  font-size: 14px;
-  text-decoration: underline;
-  margin-left: 10px;
-}
-
-.delete-button:hover {
-  text-decoration: none;
-}
-.delete-comment-button {
-  background-color: #e7f2ff;
-  color: #3273dc;
-  border: none;
-  padding: 3px 6px;
-  border-radius: 3px;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.delete-comment-button:hover {
-  background-color: #3273dc;
-  color: #fff;
-}
-	</style>
-        <footer class="site-footer">
+                    </div>
+                </div>
+            </section>
+            </main>
+            <footer class="site-footer">
             <div class="container">
                 <div class="row">
 
