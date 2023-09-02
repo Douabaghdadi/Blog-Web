@@ -329,12 +329,12 @@ if(isset($_REQUEST['submit-search']))
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Gestion User</h1>
+      <h1>Gestion Articles</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
           <li class="breadcrumb-item">Pages</li>
-          <li class="breadcrumb-item active">Gestion User</li>
+          <li class="breadcrumb-item active">Gestion Articles</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -344,7 +344,7 @@ if(isset($_REQUEST['submit-search']))
         <div class="col-lg-6">
 
         
-              <h5 class="card-title">User list</h5>
+              <h5 class="card-title">Articles list</h5>
               
               <style>
   .table {
@@ -419,8 +419,8 @@ if(isset($_REQUEST['submit-search']))
       <td><?php echo $key['titre']; ?></td>
       <td><?php echo $key['description']; ?></td>
       <td><?php echo $key['date_p']; ?></td>
-    
       <td><img src="<?php echo $key['img'];?>"></td>
+      
       <td><?php $userC=new UserC();
       $user=$userC->getuserbyID($key['id_user']);echo $user['login']; ?></td>
       <td>
@@ -434,6 +434,10 @@ if(isset($_REQUEST['submit-search']))
         <?php } ?>
         <?php if($key['is_accepted']==1) { ?>
             <a href="deletearticle.php?id=<?php echo $key['id'] ?>" >Supprimer</a>
+            <?php } ?>
+            <br>
+            <?php if($key['is_accepted']==1) { ?>
+            <a href="IndexComms.php?id=<?php echo $key['id'] ?>" > Commentaires</a>
             <?php } ?>
       </td>
     </tr>

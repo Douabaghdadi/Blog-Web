@@ -12,7 +12,6 @@ class ArticleC
         try {
             $querry = $config->prepare($requete);
             $querry->execute();
-            //$result = $querry->fetchAll(PDO::FETCH_COLUMN, 1);
             $result = $querry->fetchAll();
             return $result ;
         } catch (PDOException $th) {
@@ -26,7 +25,6 @@ class ArticleC
             try {
                 $querry = $config->prepare($requete);
                 $querry->execute(['categ'=>$int]);
-                //$result = $querry->fetchAll(PDO::FETCH_COLUMN, 1);
                 $result = $querry->fetchAll();
                 return $result ;
             } catch (PDOException $th) {
@@ -40,7 +38,6 @@ class ArticleC
             try {
                 $querry = $config->prepare($requete);
                 $querry->execute(['id'=>$int]);
-                //$result = $querry->fetchAll(PDO::FETCH_COLUMN, 1);
                 $result = $querry->fetchAll();
                 return $result ;
             } catch (PDOException $th) {

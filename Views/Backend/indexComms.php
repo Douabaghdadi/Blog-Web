@@ -1,25 +1,13 @@
 <?php
 session_start();
+include "../../Controller/CommentaireC.php";
+include_once '../../Model/Commentaire.php';
 include "../../Controller/UserC.php";
 include_once '../../Model/User.php';
-$userC = new UserC();
-if(isset($_GET['id']))
-{
-    $user=$userC->getuserbyID($_GET['id']);
-}
-if (isset($_REQUEST['edit'])))
-  { 
-    $target_dir = "../uploads/";
-    $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-    move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
-    $date = DateTime::createFromFormat('Y-m-d', $_POST['ddn']);
-    $datec = DateTime::createFromFormat('Y-m-d H:i:s', $user['date_c']);
+$comC = new CommentaireC();
+$listcoms = $comC->AfficherCommentByArticle($_GET['id']);
 
-    $userr = new User($_GET['id'],$_POST['nom'],$_POST['prenom'], $_POST['login'],$_POST['email'],$date,$target_file,$_POST['pswd'],$datec,$_POST['genre'],$_POST['role'] );
-    $userC = new UserC();
-    $userC->updateUser($userr);
-    header('location:indexAdmin.php');
-  }
+
 ?>
 
 <!DOCTYPE html>
@@ -76,9 +64,9 @@ if (isset($_REQUEST['edit'])))
     </div><!-- End Logo -->
 
     <div class="search-bar">
-      <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+      <form class="search-form d-flex align-items-center" method="POST" >
+        <input type="text" name="search" placeholder="Search" title="Enter search keyword">
+        <button type="submit" name="submit-search" title="Search"><i class="bi bi-search"></i></button>
       </form>
     </div><!-- End Search Bar -->
 
@@ -282,7 +270,7 @@ if (isset($_REQUEST['edit'])))
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
-     
+
       
 
       
@@ -290,11 +278,11 @@ if (isset($_REQUEST['edit'])))
       <li class="nav-heading">Pages</li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed active" href="indexadmin.php">
+        <a class="nav-link collapsed active" href="indexuser.php">
           <i class="bi bi-person"></i>
           <span>Gestion User</span>
         </a>
-      </li>
+      </li><!-- End Profile Page Nav -->
       <li class="nav-item">
         <a class="nav-link collapsed active" href="indexArticle.php">
           <i class="bi bi-person"></i>
@@ -336,12 +324,12 @@ if (isset($_REQUEST['edit'])))
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Gestion User</h1>
+      <h1>Gestion Commentaires</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
           <li class="breadcrumb-item">Pages</li>
-          <li class="breadcrumb-item active">Gestion User</li>
+          <li class="breadcrumb-item active">Gestion Commentaire</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -350,123 +338,92 @@ if (isset($_REQUEST['edit'])))
       <div class="row">
         <div class="col-lg-6">
 
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Modifier User</h5>
+        
+              <h5 class="card-title">Commentaire list</h5>
               
-              <div class="form-container">
-  <form  action="" method="POST" enctype="multipart/form-data">
-  <div class="form-group">
-      <label for="nom">Nom:</label>
-      <input value="<?php echo $user['nom'] ?>" type="text" id="nom" name="nom" required>
-    </div>
-    <div class="form-group">
-      <label for="login">Prenom:</label>
-      <input value="<?php echo $user['prenom'] ?>" type="text" id="prenom" name="prenom" required>
-    </div>
-    <div class="form-group">
-      <label for="login">Login:</label>
-      <input value="<?php echo $user['login'] ?>" type="text" id="login" name="login" required>
-    </div>
-    <div class="form-group">
-      <label for="email">Email:</label>
-      <input value="<?php echo $user['email'] ?>" type="email" id="email" name="email" required>
-    </div>
-    <div class="form-group">
-      <label for="ddn">Date de naissance:</label>
-      <input value="<?php echo $user['date_n'] ?>" type="date" id="ddn" name="ddn" required>
-    </div>
-    <div class="form-group">
-      <label for="fileToUpload">Image:</label>
-      <input required type="file" class="form-control" id="fileToUpload" name="fileToUpload">
-    </div>
-    <div class="form-group">
-      <label for="pswd">Mot de passe:</label>
-      <input value="<?php echo $user['mdp'] ?>" type="text" id="pswd" name="pswd" required>
-    </div>
-    <div class="form-group">
-      <label for="role">Role:</label>
-      <select value="<?php echo $user['role'] ?>" id="role" name="role" required>
-        <option value="">--Choisir--</option>
-        <option value="Admin" <?php echo $user['role'] == 'Admin' ? ' selected ' : '';?> >Admin</option>
-        <option value="Auteur" <?php echo $user['role'] == 'Auteur' ? ' selected ' : '';?>>Auteur</option>
-        <option value="Lecteur" <?php echo $user['role'] == 'Lecteur' ? ' selected ' : '';?>>Lecteur</option>
-
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="genre">Genre:</label>
-      <select value="<?php echo $user['role'] ?>" id="genre" name="genre" required>
-        <option value="">--Choisir--</option>
-        <option value="Homme" <?php echo $user['genre'] == 'Homme' ? ' selected ' : '';?> >Homme</option>
-        <option value="Femme" <?php echo $user['genre'] == 'Femme' ? ' selected ' : '';?>>Femme</option>
-
-      </select>
-    </div>
-    <div class="form-group">
-      <input type="submit" name="edit" value="Modifier">
-    </div>
-  </form>
-</div>
-
-<style>
-  .form-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px #aaaaaa;
-  }
-
-  h2 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-  }
-
-  .form-group {
-    margin-bottom: 20px;
-  }
-
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-  }
-
-  input[type="text"],
-  input[type="email"],
-  input[type="date"],
-  input[type="password"],
-  select {
+              <style>
+  .table {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #dddddd;
-    border-radius: 5px;
-    font-size: 16px;
-    color: #555;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
   }
 
-  input[type="submit"] {
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
+  .table thead th {
+    background-color: #1abc9c;
     color: #fff;
-    padding: 10px 20px;
-    font-size: 16px;
     font-weight: bold;
-    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 14px;
+    padding: 12px;
+    text-align: left;
   }
 
-  input[type="submit"]:hover {
-    background-color: #0069d9;
+  .table tbody td {
+    font-size: 14px;
+    color: #333;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .table tbody td img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .table tbody tr:hover {
+    background-color: #f2f2f2;
+  }
+
+  .table tbody td a {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    background-color: #3498db;
+    color: #fff;
+    font-weight: bold;
+    font-size: 12px;
+    margin-right: 5px;
+  }
+
+  .table tbody td a:hover {
+    background-color: #2980b9;
   }
 </style>
+
+<table class="table">
+  <thead>
+    <tr>
+      
+      <th>User</th>
+      <th>Contenu</th>
+      <th>Date</th>
+      
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php foreach($listcoms as $x) {
+        $userC = new UserC();
+        $user = $userC->getuserbyID($x['id_user']);
+        ?>
+    <tr>
+   
+      <td><?php echo $user['login']; ?></td>
+      <td><?php echo $x['contenu']; ?></td>
+      <td><?php echo $x['date']; ?></td>
+     
+      <td>
+        <a href="deletecom.php?id=<?php echo $x['id'] ?>" >Supprimer</a>
+        
+      </td>
+    </tr>
+    <?php } ?>
+  </tbody>
+</table>
 
 
             </div>

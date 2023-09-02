@@ -5,7 +5,9 @@
 include '../../Controller/ArticleC.php';
 include '../../Controller/LikesC.php';
 include '../../Controller/CommentaireC.php';
+include '../../Controller/FavorisC.php';
 
+require_once '../../model/Favoris.php';
 require_once '../../model/Commentaire.php';
 require_once '../../model/Likes.php';
 require_once '../../model/Article.php';
@@ -119,12 +121,7 @@ https://templatemo.com/tm-587-tiya-golf-club
                 <div class="container">
                     <div class="row">
 
-                        <div class="col-lg-6 col-12">
-
-                            <h1 class="text-white mb-4 pb-2">Event Listing</h1>
-
-                            <a href="#section_3" class="btn custom-btn smoothscroll me-3">Explore Events</a>
-                        </div>
+                        
 
                     </div>
                 </div>
@@ -185,7 +182,7 @@ https://templatemo.com/tm-587-tiya-golf-club
       <?php
       $LikesC = new LikesC();
       $totallikes = $LikesC->GetLikesByArticle($key['id']);
-      $already_liked = $LikesC->CheckLike(1,$key['id']);
+      $already_liked = $LikesC->CheckLike($_SESSION['id'],$key['id']);
       if ($already_liked==0) {
         
       ?>
@@ -196,7 +193,7 @@ https://templatemo.com/tm-587-tiya-golf-club
 <?php
       $LikesC = new LikesC();
       $totallikes = $LikesC->GetLikesByArticle($key['id']);
-      $already_liked = $LikesC->CheckLike(1,$key['id']);
+      $already_liked = $LikesC->CheckLike($_SESSION['id'],$key['id']);
       if ($already_liked==1) {
         
       ?>
@@ -207,13 +204,28 @@ https://templatemo.com/tm-587-tiya-golf-club
 
 
         
+
         <span class="like-count">
           <i class="fa fa-heart"></i>
           <?php echo $totallikes;?>
         </span>
         
         <button id="comment-button-<?php echo $key['id']; ?>" class="comment-button"><i class="fa fa-comment"></i> Comment</button>
+        <?php
+      $favC = new FavorisC();
+     
+      $check = $favC->Check($_SESSION['id'],$key['id']);
+      if ($check==0) {
+        
+      ?>
+      <a href="Addfav.php?id=<?php echo $key['id']; ?>">
+        <button class="like-button"><i class="fa fa-thumbs-up"></i> Favoris</button></a>
+        <?php
+}?>
+
+
                                         </div>
+                                        
                                         <div id="comment-form-container-<?php echo $key['id']; ?>" class="comment-form-container" style="display:none;">
         <form method="POST" class="comment-form">
         <input  style="display:none;" value=<?php echo $key['id'];?> name="postid"></input>

@@ -14,12 +14,7 @@ if (isset($_REQUEST['add'])) {
   $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
 
 
-
-
-
-  
       if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-          //echo 'aaaaaa';
          
           $UserC = new UserC();
          
@@ -35,7 +30,7 @@ if (isset($_REQUEST['add'])) {
          
       } else {
           echo 'error';
-          //header('Location:blank.php');
+
       }
     
     }

@@ -8,7 +8,12 @@ require_once '../../model/Article.php';
 session_start();
 $ArticleC = new ArticleC();
 $listarticles=$ArticleC->AfficherArticle();
-
+if(isset($_REQUEST['submit-search']))
+      {
+       $listarticles = $ArticleC->Recherche($_POST['search']);
+      }else {
+        $listarticles = $ArticleC->AfficherArticle();
+      }
 ?>
 
 
@@ -109,12 +114,7 @@ https://templatemo.com/tm-587-tiya-golf-club
                 <div class="container">
                     <div class="row">
 
-                        <div class="col-lg-6 col-12">
-
-                            <h1 class="text-white mb-4 pb-2">Event Listing</h1>
-
-                            <a href="#section_3" class="btn custom-btn smoothscroll me-3">Explore Events</a>
-                        </div>
+                       
 
                     </div>
                 </div>
@@ -129,12 +129,57 @@ https://templatemo.com/tm-587-tiya-golf-club
             <section class="events-section events-listing-section section-bg section-padding" id="section_3">
                 <div class="container">
                     <div class="row">
+                    <style>
+        
 
+        .search-bar {
+            text-align: center;
+            margin : 20px;
+        }
+
+        .search-form {
+            display: inline-block;
+            background-color: #f2f2f2;
+            border-radius: 30px;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            width:350px;
+            align : center;
+        }
+
+        .search-form input[type="text"] {
+            border: none;
+            outline: none;
+            padding: 10px;
+            width: 350px;
+            border-top-left-radius: 30px;
+            border-bottom-left-radius: 30px;
+        }
+
+        .search-form button[type="submit"] {
+            background-color: #9b870c;
+            border: none;
+            outline: none;
+            padding: 10px 20px;
+            border-top-right-radius: 30px;
+            border-bottom-right-radius: 30px;
+            cursor: pointer;
+            color: white;
+        }
+        </style>
                         <div class="col-lg-12 col-12">
                             <h2 class="mb-3">Liste des Articles</h2>
                         </div>
-
                         
+                        <div class="search-bar">
+                            <center>
+      <form class="search-form d-flex align-items-center" method="POST" >
+        <input type="text" name="search" placeholder="Search" title="Enter search keyword">
+        <button type="submit" name="submit-search" title="Search"><i class="bi bi-search"></i></button>
+      </form>
+    </center>
+    </div>
+          
                         <?php foreach($listarticles as $key) { ?>
                         <div class="row custom-block custom-block-bg">
                             <div class="col-lg-2 col-md-4 col-12 order-2 order-md-0 order-lg-0">
