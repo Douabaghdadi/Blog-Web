@@ -14,40 +14,8 @@ if (isset($_REQUEST['edit'])) {
   $uploadOk = 1;
   $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
   $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-  if ($check !== false) {
-      // echo "File is an image - " . $check["mime"] . ".";
-      $uploadOk = 1;
-  } else {
-      // echo "File is not an image.";
-     // $uploadOk = 0;
-  }
-
-
-  // Check if file already exists
-  if (file_exists($target_file)) {
-      //  echo "Sorry, file already exists.";
-     // $uploadOk = 0;
-  }
-
-  // Check file size
-  if ($_FILES["fileToUpload"]["size"] > 500000) {
-      //  echo "Sorry, your file is too large.";
-     // $uploadOk = 0;
-  }
-
-  // Allow certain file formats
-  if (
-      $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-      && $imageFileType != "gif"
-  ) {
-      //  echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-    //  $uploadOk = 0;
-  }
-  if ($uploadOk == 0) {
-      header('Location:blank.php?error=1');
-  } else {
+  
       if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-          //echo 'aaaaaa';
          
           $ArticleC = new ArticleC();
           if (isset($_REQUEST['edit'])) {
@@ -64,10 +32,10 @@ if (isset($_REQUEST['edit'])) {
          
       } else {
           echo 'error';
-          //header('Location:blank.php');
+
       }
     
-    }}
+    }
 
 ?> 
 
@@ -114,8 +82,8 @@ https://templatemo.com/tm-587-tiya-golf-club
                     <a class="navbar-brand d-flex align-items-center" href="index.html">
                         <img src="images/logo.png" class="navbar-brand-image img-fluid" alt="Tiya Golf Club">
                         <span class="navbar-brand-text">
-                            Tiya
-                            <small>Golf Club</small>
+                            BlogTn
+                            <small>BlogTn</small>
                         </span>
                     </a>
 
@@ -233,12 +201,41 @@ https://templatemo.com/tm-587-tiya-golf-club
 
                                    
 
-                                        <button type="submit" name="edit" class="form-control">Modifier</button>
+                                        <button id="submit-btn" type="submit" name="edit" class="form-control">Modifier</button>
                                     </div>
                                 </div>
                             </form>
                         
+                            <script>
+      document.addEventListener('DOMContentLoaded', function() {
 
+
+var submitBtn = document.getElementById('submit-btn');
+
+
+submitBtn.addEventListener('click', function(event) {
+  var nomInput = document.getElementById('titre');
+  var nomValue = nomInput.value;
+
+
+  if (/^[a-zA-Z]+$/.test(nomValue)) {
+    // nom input is valid
+  } else {
+    event.preventDefault();
+    var nomErrorMsg = document.createElement('span');
+    nomErrorMsg.innerText = 'Le titre  ne doit contenir que des lettres.';
+    nomInput.parentNode.insertBefore(nomErrorMsg, nomInput.nextSibling);
+  }
+
+ 
+
+
+  
+});
+
+
+});
+</script>
                         
 
                     </div>

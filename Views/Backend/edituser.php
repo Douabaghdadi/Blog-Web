@@ -7,7 +7,7 @@ if(isset($_GET['id']))
 {
     $user=$userC->getuserbyID($_GET['id']);
 }
-if (isset($_REQUEST['edit'])))
+if (isset($_REQUEST['edit']))
   { 
     $target_dir = "../uploads/";
     $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
@@ -404,7 +404,7 @@ if (isset($_REQUEST['edit'])))
       </select>
     </div>
     <div class="form-group">
-      <input type="submit" name="edit" value="Modifier">
+      <input id="submit-btn" type="submit" name="edit" value="Modifier">
     </div>
   </form>
 </div>
@@ -467,7 +467,77 @@ if (isset($_REQUEST['edit'])))
     background-color: #0069d9;
   }
 </style>
+<script>
+      document.addEventListener('DOMContentLoaded', function() {
 
+
+
+
+var submitBtn = document.getElementById('submit-btn');
+
+
+
+
+submitBtn.addEventListener('click', function(event) {
+  var nomInput = document.getElementById('nom');
+  var nomValue = nomInput.value;
+
+
+
+
+  if (/^[a-zA-Z]+$/.test(nomValue)) {
+    // nom input is valid
+  } else {
+    event.preventDefault();
+    var nomErrorMsg = document.createElement('span');
+    nomErrorMsg.innerText = 'Le nom  ne doit contenir que des lettres.';
+    nomInput.parentNode.insertBefore(nomErrorMsg, nomInput.nextSibling);
+  }
+
+  var prenomInput = document.getElementById('prenom');
+  var prenomValue = prenomInput.value;
+
+
+
+
+  if (/^[a-zA-Z]+$/.test(nomValue)) {
+    // nom input is valid
+  } else {
+    event.preventDefault();
+    var prenomMsgERROR = document.createElement('span');
+    prenomMsgERROR.innerText = 'Le prenom  ne doit contenir que des lettres.';
+    prenomInput.parentNode.insertBefore(prenomMsgERROR, prenomInput.nextSibling);
+  }
+
+
+
+
+ 
+
+
+
+
+  var emailInput = document.getElementById('email');
+  var emailValue = emailInput.value;
+
+
+
+
+  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+    // email input is valid
+  } else {
+    event.preventDefault();
+    var emailErrorMsg = document.createElement('span');
+    emailErrorMsg.innerText = 'Veuillez entrer une adresse email valide.';
+    emailInput.parentNode.insertBefore(emailErrorMsg, emailInput.nextSibling);
+  }
+});
+
+
+
+
+});
+</script>
 
             </div>
           </div>

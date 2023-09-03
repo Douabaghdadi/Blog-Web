@@ -5,13 +5,6 @@
    
     class FavorisC {
 
-        
-        
-
-        
-
-        
-
         function ajouter($f)
         {
             $config = config::getConnexion();
@@ -25,16 +18,13 @@
                 
                $rs=$querry->execute([
                     
-                    
                     'ida'=>$f->getIdarticle(),
                     'iduser'=>$f->getIduser()
-                    
-                    
-                    
-                   
+               
                 ]);
+
                 if ($rs) {
-                    echo "U Noted this movie";
+                    echo " article favoris";
                 }
                 else {
                     echo "ERROR";
@@ -44,9 +34,10 @@
             }
         }
 
+
         function getFavoris($int)
 {
-    $requete = "select * from favoris where id_user=:id";
+            $requete = "select * from favoris where id_user=:id";
             $config = config::getConnexion();
             try {
                 $querry = $config->prepare($requete);
@@ -59,7 +50,7 @@
     }
 
 
-        function SupprimerNote($id,$iduser)
+        function Supprimerfavoris($id,$iduser)
         {
             $sql="DELETE FROM favoris WHERE id_article= :id AND id_user=:iduser";
 			$db = config::getConnexion();

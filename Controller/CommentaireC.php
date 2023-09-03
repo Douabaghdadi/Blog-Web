@@ -12,7 +12,6 @@ class CommentaireC
             try {
                 $querry = $config->prepare($requete);
                 $querry->execute();
-                //$result = $querry->fetchAll(PDO::FETCH_COLUMN, 1);
                 $result = $querry->fetchAll();
                 return $result ;
             } catch (PDOException $th) {
@@ -30,7 +29,6 @@ class CommentaireC
                         'id'=>$id
                     ]
                 );
-                //$result = $querry->fetchAll(PDO::FETCH_COLUMN, 1);
                 $result = $querry->fetchAll();
                 return $result ;
             } catch (PDOException $th) {
@@ -86,8 +84,6 @@ class CommentaireC
                     'ida'=>$comment->getIdarticle(),
                     'date'=>$comment->getDate()->format('Y-m-d H:i:s')
                     
-                    
-                   
                 ]);
                 if ($rs) {
                     echo "Comment Created";

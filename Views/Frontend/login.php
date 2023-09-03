@@ -44,8 +44,8 @@ https://templatemo.com/tm-587-tiya-golf-club
                     <a class="navbar-brand d-flex align-items-center" href="index.html">
                         <img src="images/logo.png" class="navbar-brand-image img-fluid" alt="Tiya Golf Club">
                         <span class="navbar-brand-text">
-                            Tiya
-                            <small>Golf Club</small>
+                            BlogTn
+                            <small>BlogTn</small>
                         </span>
                     </a>
 
@@ -170,8 +170,8 @@ https://templatemo.com/tm-587-tiya-golf-club
                         <a class="navbar-brand d-flex align-items-center" href="index.html">
                             <img src="images/logo.png" class="navbar-brand-image img-fluid" alt="">
                             <span class="navbar-brand-text">
-                                Tiya
-                                <small>Golf Club</small>
+                                BlogTn
+                                <small>BlogTn</small>
                             </span>
                         </a>
                     </div>

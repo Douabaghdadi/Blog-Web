@@ -196,7 +196,7 @@ class UserC
     }
     function Recherche($search)
         {
-            $requete = "select * from user  WHERE login LIKE '%$search%'";
+            $requete = "select * from user  WHERE login LIKE '%$search%' OR nom LIKE '%$search%' OR prenom LIKE '%$search%' ";
             $config = config::getConnexion();
             try {
                 $querry = $config->prepare($requete);

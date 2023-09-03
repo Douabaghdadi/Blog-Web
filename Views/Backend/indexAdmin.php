@@ -313,7 +313,7 @@ if(isset($_REQUEST['submit-search']))
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="../frontend/inscrire.php">
+        <a class="nav-link collapsed" href="../frontend/Register.php">
           <i class="bi bi-card-list"></i>
           <span>Register</span>
         </a>

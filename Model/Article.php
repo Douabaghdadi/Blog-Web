@@ -31,7 +31,7 @@ class Article
     {
         $this->id=$id;
     }
-    public function getIs_accpeted() : int
+    public function getIs_accepted() : int
     {
         return $this->is_accpeted;
     }

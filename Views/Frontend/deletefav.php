@@ -6,7 +6,7 @@ $favC = new FavorisC();
 
 if (isset($_GET['id'])) {
     
-    $favC->SupprimerNote($_GET['id'],$_SESSION['id']);
+    $favC->Supprimerfavoris($_GET['id'],$_SESSION['id']);
     header("Location: favoris.php");
   }
   ?>

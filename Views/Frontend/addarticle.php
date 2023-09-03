@@ -15,27 +15,23 @@ if (isset($_REQUEST['add'])) {
   $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
   
       if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-          //echo 'aaaaaa';
          
           $ArticleC = new ArticleC();
           if (isset($_REQUEST['add'])) {
             $ArticleC = new ArticleC();
           $Now = new DateTime('now', new DateTimeZone('Europe/Paris'));
          
-          
             $article = new Article(1,$_POST['categorie'],$_POST['titre'], $_POST['description'],$Now,$target_file,$_SESSION['id'],0);
             $ArticleC->AjouterArticle($article);
             
-           
             header('Location:indexAuteur.php');
           } 
          
       } else {
           echo 'error';
-          //header('Location:blank.php');
       }
     
-    }}
+    }
 
 ?> 
 
@@ -82,8 +78,8 @@ https://templatemo.com/tm-587-tiya-golf-club
                     <a class="navbar-brand d-flex align-items-center" href="index.html">
                         <img src="images/logo.png" class="navbar-brand-image img-fluid" alt="Tiya Golf Club">
                         <span class="navbar-brand-text">
-                            Tiya
-                            <small>Golf Club</small>
+                            BlogTn
+                            <small>BlogTn</small>
                         </span>
                     </a>
 
@@ -202,12 +198,41 @@ https://templatemo.com/tm-587-tiya-golf-club
 
                                    
 
-                                        <button type="submit" name="add" class="form-control">Ajouter</button>
+                                        <button id="submit-btn" type="submit" name="add" class="form-control">Ajouter</button>
                                     </div>
                                 </div>
                             </form>
                         
+                            <script>
+      document.addEventListener('DOMContentLoaded', function() {
 
+
+var submitBtn = document.getElementById('submit-btn');
+
+
+submitBtn.addEventListener('click', function(event) {
+  var nomInput = document.getElementById('titre');
+  var nomValue = nomInput.value;
+
+
+  if (/^[a-zA-Z]+$/.test(nomValue)) {
+    // nom input is valid
+  } else {
+    event.preventDefault();
+    var nomErrorMsg = document.createElement('span');
+    nomErrorMsg.innerText = 'Le titre  ne doit contenir que des lettres.';
+    nomInput.parentNode.insertBefore(nomErrorMsg, nomInput.nextSibling);
+  }
+
+ 
+
+
+  
+});
+
+
+});
+</script>
                         
 
                     </div>
