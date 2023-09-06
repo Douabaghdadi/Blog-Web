@@ -92,12 +92,14 @@ if (isset($_REQUEST['add'])) {
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
+
     <div class="search-bar">
       <form class="search-form d-flex align-items-center" method="POST" action="#">
         <input type="text" name="query" placeholder="Search" title="Enter search keyword">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
       </form>
     </div><!-- End Search Bar -->
+
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -337,13 +339,7 @@ if (isset($_REQUEST['add'])) {
           <i class="bi bi-card-list"></i>
           <span>Login</span>
         </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="../frontend/inscrire.php">
-          <i class="bi bi-card-list"></i>
-          <span>Register</span>
-        </a>
-      </li><!-- End Register Page Nav -->
+      
 <!-- End Blank Page Nav -->
 
     </ul>
@@ -362,16 +358,12 @@ if (isset($_REQUEST['add'])) {
         </ol>
       </nav>
     </div><!-- End Page Title -->
+
+
     <script>
       document.addEventListener('DOMContentLoaded', function() {
 
-
-
-
 var submitBtn = document.getElementById('submit-btn');
-
-
-
 
 submitBtn.addEventListener('click', function(event) {
   var nomInput = document.getElementById('nom');
@@ -406,16 +398,8 @@ submitBtn.addEventListener('click', function(event) {
 
 
 
-
- 
-
-
-
-
   var emailInput = document.getElementById('email');
   var emailValue = emailInput.value;
-
-
 
 
   if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {

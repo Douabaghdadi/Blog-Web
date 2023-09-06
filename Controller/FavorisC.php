@@ -68,47 +68,24 @@
         function Check($iduser,$idfilm) : int
         {
 
-            $servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "blog";
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check for errors in connecting to the database
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Set the variable for the id you want to search for
-
-
-// Prepare the SQL statement to get the number of rows where idposte = id
+           
 $sql = "SELECT COUNT(*) as total FROM favoris WHERE id_article = $idfilm AND id_user = $iduser";
-
-// Execute the SQL statement and get the result
-$result = $conn->query($sql);
-
-// Check for errors in executing the SQL statement
-if (!$result) {
-    die("Error executing query: " . $conn->error);
-}
-
-// Get the number of rows where idposte = id from the result
-$row = $result->fetch_assoc();
-$total = $row['total'];
-
-
-
-// Close the database connection
-$conn->close();
-
-if ($total==0)
+$config = config::getConnexion();
+            try {
+                $stmt = $config->prepare($sql);
+                $stmt->execute();
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                $total= $result['total'];
+                if ($total==0)
 {
     return 0;
 }
 else
 
 return 1;
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
 
             
         }

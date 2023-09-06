@@ -396,7 +396,7 @@ if (isset($_REQUEST['edit']))
     </div>
     <div class="form-group">
       <label for="genre">Genre:</label>
-      <select value="<?php echo $user['role'] ?>" id="genre" name="genre" required>
+      <select value="<?php echo $user['genre'] ?>" id="genre" name="genre" required>
         <option value="">--Choisir--</option>
         <option value="Homme" <?php echo $user['genre'] == 'Homme' ? ' selected ' : '';?> >Homme</option>
         <option value="Femme" <?php echo $user['genre'] == 'Femme' ? ' selected ' : '';?>>Femme</option>

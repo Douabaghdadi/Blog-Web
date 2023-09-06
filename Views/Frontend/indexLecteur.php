@@ -74,8 +74,8 @@ https://templatemo.com/tm-587-tiya-golf-club
                     <a class="navbar-brand d-flex align-items-center" href="index.html">
                         <img src="images/logo.png" class="navbar-brand-image img-fluid" alt="Tiya Golf Club">
                         <span class="navbar-brand-text">
-                            Tiya
-                            <small>Golf Club</small>
+                           BlogTn
+                            <small>BlogTn</small>
                         </span>
                     </a>
 
@@ -277,17 +277,19 @@ https://templatemo.com/tm-587-tiya-golf-club
 
                                         </div>
                                         
-                                        <div id="comment-form-container-<?php echo $key['id']; ?>" class="comment-form-container" style="display:none;">
+        <div id="comment-form-container-<?php echo $key['id']; ?>" class="comment-form-container" style="display:none;">
         <form method="POST" class="comment-form">
         <input  style="display:none;" value=<?php echo $key['id'];?> name="postid"></input>
-          <textarea  style=" height: 150px;
+         
+         <textarea  style=" height: 150px;
   margin-bottom: 10px;
   padding: 10px;
   border: 2px solid #ccc;
   border-radius: 8px;
   font-size: 16px;
   width: 600px;"placeholder="Write your comment here" name="contenu"></textarea>
-          <button type="submit" name="addcomm" class="submit-comment-button">Submit</button>
+        
+        <button type="submit" name="addcomm" class="submit-comment-button">Submit</button>
         </form>
       </div>
       <style>
@@ -551,8 +553,8 @@ https://templatemo.com/tm-587-tiya-golf-club
                         <a class="navbar-brand d-flex align-items-center" href="index.html">
                             <img src="images/logo.png" class="navbar-brand-image img-fluid" alt="">
                             <span class="navbar-brand-text">
-                                Tiya
-                                <small>Golf Club</small>
+                                BlogTn
+                                <small>BlogTn</small>
                             </span>
                         </a>
                     </div>
